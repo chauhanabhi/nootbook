@@ -4,14 +4,15 @@ import {Link} from "react-router-dom";
 import { SearchBar } from "../index";
 import { DropdownLoggedOut, DropdownLoggedIn } from '../index';
 import { useCart } from "../../context";
+import Logo from "../../assets/images/logo.png"
 
 export const Header = () => {
     const [showSearcBar, setShowSearchaBar] = useState(false);
     const [dropdown, setDropdown]= useState(false);
     const [dark, setDark] = useState(JSON.parse(sessionStorage.getItem("dark")) || false);
-     const [token, setToken] = useState(sessionStorage.getItem("token"));
-     const {cartList} = useCart();
-     console.log(token,"");
+    const [token, setToken] = useState(sessionStorage.getItem("token"));
+    const {cartList} = useCart();
+    console.log(token,"");
      
     
     useEffect(() =>{
@@ -41,7 +42,7 @@ export const Header = () => {
   <nav className="bg-white dark:bg-gray-900">
     <div className="border-b border-slate-200 dark:border-b-0 flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4 md:px-6 py-3">
       <Link to="/" className="flex items-center">
-        <img src="Logo" className="mr-3 h-10" alt="CodeBook Logo" />
+        <img src={Logo} className="mr-3 h-10" alt="CodeBook Logo" />
         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
           CodeBook
         </span>
