@@ -21,10 +21,10 @@ export const ProductDetail = () => {
     setData(json)
   }
   fetchData()
-  // check is in cart
-  const productIsInCart = cartList.find(item => item.id === id);
-  productIsInCart ? setIsInCart(true) : setIsInCart(false);
-}, [id, cartList, data.id])
+  // check is in carttt
+  const productIsInCart = cartList.find(item => item.id === data.id);
+  setIsInCart(!!productIsInCart);
+}, [id, cartList])
 
   return (
 
