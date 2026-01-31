@@ -8,20 +8,24 @@ import { useCart } from "../../context";
 export const Header = () => {
     const [showSearcBar, setShowSearchaBar] = useState(false);
     const [dropdown, setDropdown]= useState(false);
-    const [dark, setDark] = useState(JSON.parse(localStorage.getItem("dark")) || false);
-     const [token, setToken] = useState(localStorage.getItem("token"));
-     const {cartList} = useCart()
+    const [dark, setDark] = useState(JSON.parse(sessionStorage.getItem("dark")) || false);
+     const [token, setToken] = useState(sessionStorage.getItem("token"));
+     const {cartList} = useCart();
+     console.log(token,"");
+     
     
     useEffect(() =>{
-        localStorage.setItem("dark", JSON.stringify(dark))
+        sessionStorage.setItem("dark", JSON.stringify(dark))
         if(dark){
             document.documentElement.classList.add("dark")
         }else{
            document.documentElement.classList.remove("dark")
         }
+
+        
         // update login/logout dropdown updated
         const handleStorageChange = () => {
-          setToken(localStorage.getItem("token"));
+          setToken(sessionStorage.getItem("token"));
         };
         window.addEventListener("storage", handleStorageChange);
         // also run once when component loads
@@ -30,8 +34,6 @@ export const Header = () => {
           window.removeEventListener("storage", handleStorageChange);
         };
     },[dark])
-
-
 
   return (
     <>

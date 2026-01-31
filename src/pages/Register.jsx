@@ -15,17 +15,10 @@ export const Register = ({ title }) => {
       email: e.target.email.value,
       password: e.target.password.value,
     };
-    
-   try{
-       const data = await register(authDetail);
-        toast.success("Registration successful 🎉");
-        navigate("/product");
-      }
-       catch (error) {
-           toast.error("Server error. Please try again later.");
-       }
+     const data = await register(authDetail);
+     data.accessToken ? navigate("/product") : toast.error(data);
+   
   }
-
 
 
   return (

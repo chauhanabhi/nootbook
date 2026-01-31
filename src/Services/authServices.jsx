@@ -1,27 +1,33 @@
 
 export async function login(authDetail) {
-    const url = `${import.meta.env.VITE_API_URL}/login`;
-    const requestOpt = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(authDetail),
-    }
-    
-        const res = await fetch(url, requestOpt);
-        const data = await res.json();
+  const url = `${import.meta.env.VITE_API_URL}/signin`;
 
-        if (!res.ok) {
-            toast.error(data.message || "Login failed");
-            return;
-        }
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(authDetail),
+  });
 
-        // ✅ SAVE AUTH DATA
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+  const data = await response.json();
 
-        window.dispatchEvent(new Event("storage")); // 👈 ADD THIS LIN
+  // 🔴 THIS WAS MISSING
+  if (!response.ok) {
+    throw new Error(data.message || "Login failed");
+  }
 
+  // ✅ SUCCESS PATH ONLY
+  sessionStorage.setItem("token", data.accessToken);
+  sessionStorage.setItem("id", data.user.id);
+
+  // notify Header
+  window.dispatchEvent(new Event("storage"));
+
+  return data;
 }
+
+
+       
+   
 
 // Register page
 
@@ -32,22 +38,24 @@ export async function register(authDetail){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(authDetail),
       }
-      const res = await fetch(url,requestOpt);
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.message || "Registration failed");
-        return;
+      const response = await fetch(url,requestOpt);
+      const data = await response.json();
+      
+      // ❌ login failed
+  if (!response.ok) {
+    throw new Error(data.message || "Invalid email or password");
+  }
+       // ✅ login success
+      if(data.accessToken){
+        sessionStorage.setItem("token", JSON.stringify(data.accessToken));
+        sessionStorage.setItem("id", JSON.stringify(data.user.id))
       }
-      // ✅ success
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
 
-      window.dispatchEvent(new Event("storage")); // 👈 ADD THIS LINE
+      return data;
 
 }
 // Logout
 export function logout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
 }

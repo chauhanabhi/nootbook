@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')).render(
   <CartProvider>
   <FilterProvider>
   <ScrolltoTop/>
-  <ToastContainer closeButton={false} autoClose={2000} />
+  <ToastContainer autoClose={2000} />
     <App />
     </FilterProvider>
     </CartProvider>

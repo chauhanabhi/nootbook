@@ -8,7 +8,8 @@ import { getUserOrder } from "../../Services";
 export const DashboardPage = ({title}) => {
   useTitle(title)
   const [orders, setOrders] = useState([]);
-  const token = localStorage.getItem("token")
+  const token = sessionStorage.getItem("token");
+console.log(token);
 
 
   useEffect(() => {

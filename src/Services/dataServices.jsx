@@ -1,15 +1,16 @@
 function getSession() {
-    const token = localStorage.getItem("token")
-    const userId = JSON.parse(localStorage.getItem("user"));
-    return { token: token, userId: userId };
+    const token = sessionStorage.getItem("token");
+    const userId = JSON.parse(sessionStorage.getItem("id"));
+    return { token, userId };
+    
 }
+
 
 // //////////////get User
 export async function getUser() {
     const browsData = getSession();
-    const id = browsData.userId?.id;
-    if (!id) return;
-    const url = `${import.meta.env.VITE_API_URL}/users/${id}`;
+ 
+    const url = `${import.meta.env.VITE_API_URL}/users/${browsData.userId}`;
    
     console.log(url);
     
@@ -24,11 +25,9 @@ export async function getUser() {
 // //////////////get User Order
 export async function getUserOrder() {
     const browsData = getSession();
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user?.id;
-    console.log(userId);
-    const url = `${import.meta.env.VITE_API_URL}/orders?user.id=${userId}`;
-
+    const url = `${import.meta.env.VITE_API_URL}/orders?user.id=${browsData.userId}`;
+    console.log(url);
+    
     const requestOption = {
         method: "GET",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${browsData.token}` }
@@ -40,7 +39,7 @@ export async function getUserOrder() {
 // ///////////////create Order
 export async function createOrder(total, cartList, user) {
     const browsData = getSession();
-    const token = localStorage.getItem("browsData.token")
+    const token = sessionStorage.getItem("browsData.token")
     const url = `${import.meta.env.VITE_API_URL}/orders`;
     const order = {
         cartList: cartList,

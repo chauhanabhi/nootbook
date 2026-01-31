@@ -3,8 +3,8 @@ import { cartReducer } from "../reducer/cartReducer";
 import { toast } from "react-toastify";
 
 const cartInitialState = {
-    cartList : JSON.parse(localStorage.getItem("cart") || "[]"),
-    total : JSON.parse(localStorage.getItem("carttotal") || "0")
+    cartList : JSON.parse(sessionStorage.getItem("cart") || "[]"),
+    total : JSON.parse(sessionStorage.getItem("carttotal") || "0")
 }
 
 export const CartContext = createContext(cartInitialState);
@@ -15,8 +15,8 @@ export const CartProvider = ({ children }) => {
     const [state, dispatch] = useReducer(cartReducer, cartInitialState);
 
     useEffect(() => {
-        localStorage.setItem("cart",JSON.stringify(state.cartList));
-        localStorage.setItem("carttotal", JSON.stringify(state.total));
+        sessionStorage.setItem("cart",JSON.stringify(state.cartList));
+        sessionStorage.setItem("carttotal", JSON.stringify(state.total));
     },[state.cartList, state.total])
 
     const addToCart = (product) =>{

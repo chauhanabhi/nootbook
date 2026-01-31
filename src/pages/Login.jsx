@@ -10,22 +10,22 @@ export const Login = ({title}) => {
   const email = useRef();
   const password = useRef();
 
-  async function handleLogin(event) {
+async function handleLogin(event) {
   event.preventDefault();
 
   const authDetail = {
-    email: email.current.value,
-    password: password.current.value,
+    email: email.current.value.trim(),
+    password: password.current.value.trim(),
   };
-  
-   try{
+
+  try {
     const data = await login(authDetail);
-     toast.success("Login successful 🎉");
-      navigate("/product");
-   }
-    catch (error) {
-        toast.error("Server error. Please try again later.");
-    }
+
+    toast.success("Login successful 🎉");
+    navigate("/product");
+  } catch (error) {
+    toast.error(error.message);
+  }
 }
 
   return (
@@ -36,7 +36,7 @@ export const Login = ({title}) => {
         <form onSubmit={handleLogin}>
           <div className="mb-6">
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your email</label>
-              <input ref={email} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="shubham@example.com" required autoComplete="off" />
+              <input ref={email} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="shubham@example.com" required  />
           </div>
           <div className="mb-6">
               <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your password</label>
